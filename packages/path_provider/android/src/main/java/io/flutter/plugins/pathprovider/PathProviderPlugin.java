@@ -38,6 +38,9 @@ public class PathProviderPlugin implements MethodCallHandler {
       case "getStorageDirectory":
         result.success(getPathProviderStorageDirectory());
         break;
+      case "getDownloadsDirectory":
+        result.success(getPathProviderDownloadsDirectory());
+        break;
       default:
         result.notImplemented();
     }
@@ -53,5 +56,9 @@ public class PathProviderPlugin implements MethodCallHandler {
 
   private String getPathProviderStorageDirectory() {
     return Environment.getExternalStorageDirectory().getAbsolutePath();
+  }
+
+  private String getPathProviderDownloadsDirectory() {
+    return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).getAbsolutePath();
   }
 }
