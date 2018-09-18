@@ -61,3 +61,21 @@ Future<Directory> getExternalStorageDirectory() async {
   }
   return Directory(path);
 }
+
+/// Path to a downloads directory where the application may access top level storage.
+/// The current operating system should be determined before issuing this
+/// function call, as this functionality is only available on Android.
+///
+/// On iOS, this function throws an UnsupportedError as it is not possible
+/// to access outside the app's sandbox.
+///
+/// On Android this returns getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).
+Future<Directory> getDownloadsDirectory() async {
+  if (Platform.isIOS)
+    throw UnsupportedError("Functionality not available on iOS");
+  final String path = await _channel.invokeMethod('getDownloadsDirectory');
+  if (path == null) {
+    return null;
+  }
+  return Directory(path);
+}
